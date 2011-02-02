@@ -54,8 +54,8 @@ Here is what an example module might look like:
 						/Service
 							PostServiceInterface.php
 							PostService.php
-						/View
-							/Helper
+					/View
+						/Helper
 				/views
 					/index
 						index.phtml

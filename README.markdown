@@ -35,8 +35,8 @@ Here is what an example module might look like:
 		/modules
 			/blog
 				/configs
-					/navigation.xml
-					/routes.yml
+					navigation.xml
+					routes.yml
 				/src (Namespace is Application\Blog)
 					/Bootstrap.php
 					/Controller
@@ -44,22 +44,22 @@ Here is what an example module might look like:
 						PostController.php
 					/Domain
 						/Entity
-							/Post.php
-							/PostVersion.php
-							/PostSlug.php
+							Post.php
+							PostVersion.php
+							PostSlug.php
 						/Fixture
-							/PostFixture.php
+							PostFixture.php
 						/Repository
-							/PostRepository.php
+							PostRepository.php
 						/Service
-							/PostServiceInterface.php
-							/PostService.php
+							PostServiceInterface.php
+							PostService.php
 						/View
 							/Helper
 				/views
 					/index
-						/index.phtml
-						/post.phtml
-						/category.phtml
+						index.phtml
+						post.phtml
+						category.phtml
 				
 	

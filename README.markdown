@@ -41,7 +41,7 @@ Here is what an example module might look like:
 					/Bootstrap.php
 					/Controller
 						IndexController.php
-						PostControl
+						PostController.php
 					/Domain
 						/Entity
 							/Post.php

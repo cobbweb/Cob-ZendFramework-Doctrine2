@@ -42,7 +42,7 @@ class Bootstrap extends \Zend_Application_Bootstrap_Bootstrap
     {
         $this->getPluginloader()->addPrefixPath(
             'Cob\\Application\\Resource\\',
-            'Cob/Application/Resource'
+            'Cob/lib/Cob/Application/Resource'
         );
         
         parent::__construct($application);

@@ -25,8 +25,6 @@ THE SOFTWARE.
 
 namespace Cob\Application\Resource;
 
-use Cob\Controller\Front;
-
 /**
  * Custom FrontController resource to inject out own distpacher object
  *
@@ -43,7 +41,7 @@ class Frontcontroller extends \Zend_Application_Resource_Frontcontroller
     public function getFrontController()
     {
         if(null === $this->_front){
-            $this->_front = Front::getInstance();
+            $this->_front = \Zend_Controller_Front::getInstance();
 
             $options = $this->getOptions();
 

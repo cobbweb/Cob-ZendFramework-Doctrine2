@@ -32,8 +32,10 @@ foreach($argv as $key => $arg){
 
 putenv("APPLICATION_ENV=$env");
 
+
+// Assume we are in my-app/lib/Cob/bin where my-app is our desired SRC_PATH
 defined('SRC_PATH')
-    || define('SRC_PATH', realpath(dirname(__FILE__) . '/../'));
+    || define('SRC_PATH', realpath(dirname(__FILE__) . '/../../../'));
 
 // Define path to application directory
 defined('APPLICATION_PATH')
@@ -45,30 +47,17 @@ defined('APPLICATION_ENV')
 
 // Ensure library/ is on include_path
 set_include_path(implode(PATH_SEPARATOR, array(
-    realpath(APPLICATION_PATH . '/../library'),
+    SRC_PATH . '/lib',
     get_include_path(),
 )));
 
-function d($var)
-{
-    $stack = xdebug_get_function_stack();
-    $calledFrom = array_pop($stack);
-    $basePath = realpath(APPLICATION_PATH . '/../');
-    $file = str_replace($basePath, '', $calledFrom['file']);
-    $line = $calledFrom['line'];
-
-    $calledFrom = "Called from <strong>{$file}</strong> on <strong>line {$line}</strong>";
-
-    die(Zend_Debug::dump($var, $calledFrom, false));
-}
-
 /** Zend_Application */
-require_once 'Cob/Application/Application.php';
+require_once 'Cob/lib/Cob/Application/Application.php';
 
 // Creating application
 $application = new \Cob\Application\Application(
     APPLICATION_ENV,
-    APPLICATION_PATH . '/configs/application.ini'
+    APPLICATION_PATH . '/configs/application.yml'
 );
 
 // Bootstrapping resources

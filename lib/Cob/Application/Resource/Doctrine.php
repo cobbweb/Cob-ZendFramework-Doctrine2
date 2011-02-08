@@ -125,6 +125,10 @@ class Doctrine extends \Zend_Application_Resource_ResourceAbstract
             
             $paths[] = $path;
         }
+	
+	if(!isset($paths)){
+	    throw new ResourceException("No entities found");
+	}
         
         return $paths;
     }

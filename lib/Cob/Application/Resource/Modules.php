@@ -128,12 +128,14 @@ class Modules extends \Zend_Application_Resource_Modules
         $bootstrapFile = sprintf(
                 '%s' . DIRECTORY_SEPARATOR . 'Bootstrap.php', $path
         );
+	
         if(!file_exists($bootstrapFile)){
             return;
         }
 
         $bootstrapClass = $this->_getModuleBootstrapClass($name);
         $bootstrap = new $bootstrapClass($this->getBootstrap());
+        
         if(!$bootstrap instanceof \Zend_Application_Bootstrap_Bootstrapper){
             throw new \LogicException('Module bootstraps must implement Zend_Application_Bootstrap_Bootstrapper');
         }

@@ -58,6 +58,9 @@ class Application extends \Zend_Application
         
         $loader = new ClassLoader('Symfony');
         $loader->register();
+	
+	$loader = new ClassLoader('Cob', SRC_PATH . '/lib/Cob/lib');
+	$loader->register();
         
         if (null !== $options) {
             if (is_string($options)) {
@@ -67,7 +70,7 @@ class Application extends \Zend_Application
             } elseif (!is_array($options)) {
                 throw new Zend_Application_Exception('Invalid options provided; must be location of config file, a config object, or an array');
             }
-
+	    
             $this->setOptions($options);
         }
     }

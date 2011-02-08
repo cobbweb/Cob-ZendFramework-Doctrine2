@@ -66,8 +66,9 @@ class ModuleFixtureLoader implements Loader
                 continue;
             }
             
-            if(preg_match('/^[a-z]+Fixture\.php$/i', $it->getFilename())){
-                $class = $this->_namespace. '\\' . substr($it->getSubPathname(), 0, -4);
+            if(preg_match('/[a-z]+Fixture\.php$/i', $it->getFilename())){
+                $class = $this->_namespace . '\\' . substr($it->getSubPathname(), 0, -4);
+                $class = str_replace('/', '\\', $class);
                 $fixtures[] = new $class;
             }
             

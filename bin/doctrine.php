@@ -25,8 +25,8 @@ THE SOFTWARE.
 
 require 'bootstrap.php';
 
-$bootstrap->bootstrap('DoctrineORM');
-$em = $bootstrap->getResource('DoctrineORM');
+$bootstrap->bootstrap('doctrine');
+$em = $bootstrap->getResource('doctrine');
 
 // Console
 $cli = new \Symfony\Component\Console\Application(

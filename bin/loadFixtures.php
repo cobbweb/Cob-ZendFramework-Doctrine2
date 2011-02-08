@@ -24,9 +24,9 @@ THE SOFTWARE.
 
 require 'bootstrap.php';
 
-$bootstrap->bootstrap('DoctrineORM');
+$bootstrap->bootstrap('doctrine');
 
-$em = $application->getBootstrap()->getResource('DoctrineORM');
+$em = $application->getBootstrap()->getResource('doctrine');
 $writer = new \Symfony\Component\Console\Output\ConsoleOutput();
 
 $writer->writeln("Loading fixtures...");

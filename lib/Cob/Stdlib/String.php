@@ -61,7 +61,7 @@ class String
 	 */
     public function password($salt=self::SALT)
     {
-        return sha1($this->string . $salt);
+        return hash('sha512', sha1($salt));
     }
     
 	/**

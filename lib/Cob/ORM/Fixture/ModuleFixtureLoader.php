@@ -32,17 +32,17 @@ namespace Cob\ORM\Fixture;
 class ModuleFixtureLoader implements Loader
 {
     
- 	/**
- 	 * Base namespace
-	 *
-	 * @var string
-	 */
+    /**
+     * Base namespace
+     *
+     * @var string
+     */
     protected $_namespace;
     
-	/**
-	 * Path to module folder
-	 * @var string
-	 */
+    /**
+     * Path to module folder
+     * @var string
+     */
     protected $_path;
     
     public function __construct($namespace, $path)
@@ -51,10 +51,10 @@ class ModuleFixtureLoader implements Loader
         $this->_path      = $path;
     }
     
-	/**
-	 * Loads the fixtures
-	 * @return array Array of fixtures
-	 */
+    /**
+     * Loads the fixtures
+     * @return array Array of fixtures
+     */
     public function getFixtures()
     {
         $it = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($this->_path));

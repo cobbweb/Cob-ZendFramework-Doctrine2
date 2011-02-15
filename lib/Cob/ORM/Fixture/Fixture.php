@@ -34,15 +34,15 @@ use Doctrine\ORM\EntityManager;
 abstract class Fixture
 {
     
-	/**
-	 * @var Doctrine\ORM\EntityManager
-	 */
+    /**
+     * @var Doctrine\ORM\EntityManager
+     */
     protected $em;
     
-	/**
-	 * Dependent fixtures, class name as strings
-	 * @var array()
-	 */
+    /**
+     * Dependent fixtures, class name as strings
+     * @var array()
+     */
     protected $_dependsOn = array();
  
     public function setEntityManager(EntityManager $em)
@@ -70,9 +70,9 @@ abstract class Fixture
         return $this->_dependsOn;
     }
     
-	/**
-	 * Returns an array of entities to persist
-	 */
+    /**
+     * Returns an array of entities to persist
+     */
     abstract function getEntities();
     
 }

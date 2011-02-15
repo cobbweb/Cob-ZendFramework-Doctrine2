@@ -25,9 +25,9 @@
 namespace Cob\Tests\ORM;
 
 /**
- * Descriptin of EntityUtilTest
+ * Entity Utility tests
  *
- * @author Cobby
+ * @author Andrew Cobby <cobby@cobbweb.me>
  */
 class EntityUtilTest extends OrmTestCase
 {

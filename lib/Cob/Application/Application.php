@@ -46,18 +46,6 @@ class Application extends \Zend_Application
         $loader = new ClassLoader('Zend');
         $loader->setNamespaceSeparator('_');
         $loader->register();
-        
-        $loader = new ClassLoader('Doctrine\ORM');
-        $loader->register();
-        
-        $loader = new ClassLoader('Doctrine\DBAL');
-        $loader->register();
-        
-        $loader = new ClassLoader('Doctrine\Common');
-        $loader->register();
-        
-        $loader = new ClassLoader('Symfony');
-        $loader->register();
 	
 	$loader = new ClassLoader('Cob', SRC_PATH . '/lib/Cob/lib');
 	$loader->register();

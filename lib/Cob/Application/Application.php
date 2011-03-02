@@ -30,38 +30,75 @@ require_once 'Zend/Application.php';
 require_once 'Zend/Loader/Autoloader.php';
 
 /**
- * Custom Application that setups up our autoloaders
+ * Custom Application that sets up our autoloaders
  *
  * @author Andrew Cobby <cobby@cobbweb.me>
  */
 class Application extends \Zend_Application
 {
     
-    public function __construct($environment, $options = null)
+    public function __construct($environment, array $config)
     {
         $this->_environment = (string) $environment;
         
         require_once 'Doctrine/Common/ClassLoader.php';
         
-        $loader = new ClassLoader('Zend');
+        $loader = new ClassLoader('Zend', SRC_PATH . '/lib/ZendFramework/library');
         $loader->setNamespaceSeparator('_');
         $loader->register();
 	
-	$loader = new ClassLoader('Cob', SRC_PATH . '/lib/Cob/lib');
-	$loader->register();
+        $loader = new ClassLoader('Cob', SRC_PATH . '/lib/Cob/lib');
+        $loader->register();
         
-        if (null !== $options) {
-            if (is_string($options)) {
-                $options = $this->_loadConfig($options);
-            } elseif ($options instanceof Zend_Config) {
-                $options = $options->toArray();
-            } elseif (!is_array($options)) {
-                throw new Zend_Application_Exception('Invalid options provided; must be location of config file, a config object, or an array');
-            }
-	    
-            $this->setOptions($options);
-        }
+        $this->_initConfig($config);
     }
 
+    private function _initConfig(array $config)
+    {   
+        
+        $configFile = "{$config['directory']}/production.{$config['format']}";
+        $configuration = $this->_createConfig($configFile, 'production');
+        
+        if('production' !== $this->getEnvironment()){
+            $configFile = "{$config['directory']}/" . $this->getEnvironment() . ".{$config['format']}";
+            $configuration->merge($this->_createConfig($configFile, $this->getEnvironment()));
+            $configuration->setReadOnly();
+        }
+        
+        $this->setOptions($configuration->toArray());
+    }
+    
+    private function _createConfig($file, $section)
+    {
+        $suffix = strtolower(pathinfo($file, PATHINFO_EXTENSION));
+        
+        switch($suffix){
+            case 'xml':
+                $config = new \Zend_Config_Xml($file, $section, true);
+            break;
+        
+            case 'ini':
+                $config = new \Zend_Config_Ini($file, $section, true);
+            break;    
+                
+            case 'yaml':
+            case 'yml':
+                $config = new \Zend_Config_Yaml($file, $section, true);
+            break;
+        
+            case 'php':
+            case 'inc':
+                $config = include $file;
+                
+                if (!is_array($config)) {
+                    throw new Zend_Application_Exception('Invalid configuration file provided; PHP file does not return array value');
+                }
+                
+                $config = new \Zend_Config($config, true);
+            break;
+        }
+        
+        return $config;
+    }
     
 }

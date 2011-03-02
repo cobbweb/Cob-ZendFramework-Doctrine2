@@ -33,32 +33,7 @@ foreach($argv as $key => $arg){
 putenv("APPLICATION_ENV=$env");
 
 
-// Assume we are in my-app/lib/Cob/bin where my-app is our desired SRC_PATH
-defined('SRC_PATH')
-    || define('SRC_PATH', realpath(dirname(__FILE__) . '/../../../'));
-
-// Define path to application directory
-defined('APPLICATION_PATH')
-    || define('APPLICATION_PATH', SRC_PATH . '/application');
-
-// Define application environment
-defined('APPLICATION_ENV')
-    || define('APPLICATION_ENV', (getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'development'));
-
-// Ensure library/ is on include_path
-set_include_path(implode(PATH_SEPARATOR, array(
-    SRC_PATH . '/lib',
-    get_include_path(),
-)));
-
-/** Zend_Application */
-require_once 'Cob/lib/Cob/Application/Application.php';
-
-// Creating application
-$application = new \Cob\Application\Application(
-    APPLICATION_ENV,
-    APPLICATION_PATH . '/configs/application.yml'
-);
+require __DIR__.'/../../../public/bootstrap.php';
 
 // Bootstrapping resources
 $bootstrap = $application->bootstrap()->getBootstrap();

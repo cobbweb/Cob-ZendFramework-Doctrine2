@@ -107,21 +107,21 @@ class Rebuild
     public function generateProxies()
     {
         $this->writer->writeln('Generating proxies');
-        $this->doctineCommand("orm:generate-proxies");
+        $this->doctrineCommand("orm:generate-proxies");
         $this->writer->writeln('');
     }
 
     public function dropDatabase()
     {
         $this->writer->writeln('Dropping database');
-        $this->doctineCommand('orm:schema-tool:drop --force');
+        $this->doctrineCommand('orm:schema-tool:drop --force');
         $this->writer->writeln('');
     }
 
     public function createDatabase()
     {
         $this->writer->writeln('Creating database');
-        $this->doctineCommand('orm:schema-tool:create');
+        $this->doctrineCommand('orm:schema-tool:create');
         $this->writer->writeln('');
     }
 
@@ -130,7 +130,7 @@ class Rebuild
         $this->execute('php -f ./loadFixtures.php');
     }
 
-    public function doctineCommand($command)
+    public function doctrineCommand($command)
     {
         $this->execute("php -f ./doctrine.php $command");
     }

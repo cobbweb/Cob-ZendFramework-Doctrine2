@@ -65,22 +65,22 @@ class Doctrine extends \Zend_Application_Resource_ResourceAbstract
      */
     public function init()
     {
+        return false;
         // Create the EntityManager
         $config = new Configuration();
+        $cache = new \Doctrine\Common\Cache\ArrayCache();
         
-        // check APC is available (for CLI compatibility)
-        if(function_exists('apc_fetch')){
-	        $cache = new ApcCache();
-	        $config->setMetadataCacheImpl($cache);
-	        $config->setQueryCacheImpl($cache);
+        if(APPLICATION_ENV == "production"){
+            $cache = new ApcCache();
         }
         
-        $evt = new EventManager();
+        $config->setMetadataCacheImpl($cache);
+        $config->setQueryCacheImpl($cache);
         
+        $evt = new EventManager();
         $driver = AnnotationDriver::create($this->getEntitiesPaths());
         
         $config->setMetadataDriverImpl($driver);
-        
         $config->setProxyDir($this->getProxyPath());
         $config->setProxyNamespace($this->getProxyNamespace());
         $config->setAutoGenerateProxyClasses(true);
@@ -126,9 +126,10 @@ class Doctrine extends \Zend_Application_Resource_ResourceAbstract
             $paths[] = $path;
         }
 	
-	if(!isset($paths)){
-	    throw new \LogicException("No entities found");
-	}
+        if(!isset($paths)){
+            return array();
+            //throw new \LogicException("No entities found");
+        }
         
         return $paths;
     }

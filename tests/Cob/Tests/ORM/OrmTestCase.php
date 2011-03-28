@@ -33,22 +33,22 @@ use Doctrine\ORM\Configuration,
  *
  * @author Cobby
  */
-class OrmTestCase extends \PHPUnit_Framework_TestCase
+class OrmTestCase extends \Cob\Tests\TestCase
 {
     
     protected $em;
 
     public function setUp()
     {
-	parent::setUp();
+        parent::setUp();
 	
-	$config = new Configuration();
+        $config = new Configuration();
         $config->setMetadataCacheImpl(new ArrayCache);
         $config->setQueryCacheImpl(new ArrayCache);
         $config->setProxyDir(__DIR__ . '/Proxy');
         $config->setProxyNamespace('Cob\Tests\ORM');
         
-	$driver = AnnotationDriver::create('./Entity');
+        $driver = AnnotationDriver::create('./Entity');
 	
         $config->setMetadataDriverImpl($driver);
 
@@ -57,7 +57,7 @@ class OrmTestCase extends \PHPUnit_Framework_TestCase
             'memory' => true,
         );
 	
-	$this->em = \Doctrine\ORM\EntityManager::create($conn, $config);
+        $this->em = \Doctrine\ORM\EntityManager::create($conn, $config);
     }
 
 }

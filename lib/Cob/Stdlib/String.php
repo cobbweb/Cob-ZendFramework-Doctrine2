@@ -33,7 +33,7 @@ class String
 {
     
 	/** Basic salt for password hasing */
-    const SALT = "Cob\Stdlib";
+    const SALT = "C0b\$tdI1b\$tring";
     
 	/**
 	 * The current string
@@ -71,8 +71,9 @@ class String
     {
         $string = $this->string;
         $string = trim($string); // trim whitespace
-        $string = preg_replace('/[^a-z0-9-]/i', ' ', $string); // replace invalid characters with spaces
-        $string = str_replace(' ', '-', $string); // replaces spaces with dashes
+        $string = preg_replace('/[^a-z0-9\-\ \_]/i', '', $string); // replace invalid characters with spaces
+        $string = str_replace(' ', '-', $string); // replace spaces with dashes
+        $string = str_replace('_', '-', $string); // replace underscores with dashes
         $string = preg_replace('/-+/', '-', $string); // replace multi-dashes with one dash
         $string = strtolower($string); // convert to lowercase
         $string = trim($string, '-');
@@ -90,7 +91,7 @@ class String
         $subject = $this->string;
 
         if(count($search) > count($replace)){
-            throw new \InvalidArgumentException('Not enough replacements provided');
+            throw new \InvalidArgumentException('Not enough replacements provided, more search than replace arguments');
         }
 
         foreach($search as $key => $value){

@@ -25,8 +25,8 @@ THE SOFTWARE.
 
 require 'bootstrap.php';
 
-$bootstrap->bootstrap('doctrine');
-$em = $bootstrap->getResource('doctrine');
+$bootstrap->bootstrap('Mongo');
+$dm = $bootstrap->getResource('Mongo');
 
 // Console
 $cli = new \Symfony\Component\Console\Application(
@@ -38,8 +38,8 @@ try {
     // Bootstrapping Console HelperSet
     $helperSet = array();
     
-    $helperSet['db'] = new \Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper($em->getConnection());
-    $helperSet['em'] = new \Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper($em);
+    $helperSet['db'] = new \Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper($dm->getConnection());
+    $helperSet['em'] = new \Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper($dm);
 } catch (\Exception $e) {
     $cli->renderException($e, new \Symfony\Component\Console\Output\ConsoleOutput());
 }

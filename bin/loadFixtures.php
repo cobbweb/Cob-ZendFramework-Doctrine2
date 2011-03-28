@@ -24,9 +24,9 @@ THE SOFTWARE.
 
 require 'bootstrap.php';
 
-$bootstrap->bootstrap('doctrine');
+$bootstrap->bootstrap('mongo');
 
-$em = $application->getBootstrap()->getResource('doctrine');
+$dm = $application->getBootstrap()->getResource('mongo');
 $writer = new \Symfony\Component\Console\Output\ConsoleOutput();
 
 $writer->writeln("Loading fixtures...");
@@ -41,12 +41,12 @@ while($it->valid()){
     
     if(is_dir($it->getPathname() . '/src/Domain/Fixture')){
         $namespace = "Application\\" . ucfirst($it->getFilename()) . "\Domain\Fixture";
-        $loaders[] = new \Cob\ORM\Fixture\ModuleFixtureLoader($namespace, $it->getPathname() . '/src/Domain/Fixture');
+        $loaders[] = new \Cob\Doctrine\Fixture\ModuleFixtureLoader($namespace, $it->getPathname() . '/src/Domain/Fixture');
     }
     
     $it->next();
 }
 
-$runner = new \Cob\ORM\Fixture\FixtureRunner($em, $writer);
+$runner = new \Cob\Doctrine\ODM\Fixture\DocumentFixtureRunner($dm, $writer);
 $runner->addLoaders($loaders);
 $runner->run();

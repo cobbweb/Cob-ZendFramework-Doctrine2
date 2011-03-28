@@ -36,23 +36,23 @@ class EntityUtilTest extends OrmTestCase
     
     public function setUp()
     {
-	parent::setUp();
-	
-	$this->eu = new \Cob\ORM\EntityUtil($this->em);
+        parent::setUp();
+
+        $this->eu = new \Cob\ORM\EntityUtil($this->em);
     }
 
     
     public function testCanCreateEntities()
     {
-	$data = array(
-	    'name'  => 'Basketball',
-	    'price' => 58.99
-	);
-	
-	$product = $this->eu->createEntity(new Entity\Product(), $data);
-	
-	$this->assertEquals($data['name'], $product->getName());
-	$this->assertEquals($data['price'], $product->getPrice());
+        $data = array(
+            'name'  => 'Basketball',
+            'price' => 58.99
+        );
+
+        $product = $this->eu->createEntity(new Entity\Product(), $data);
+
+        $this->assertEquals($data['name'], $product->getName());
+        $this->assertEquals($data['price'], $product->getPrice());
     }
     
     /**
@@ -60,12 +60,12 @@ class EntityUtilTest extends OrmTestCase
      */
     public function testCannotAddInvalidProperty()
     {
-	$data = array(
-	    'name'     => 'Basketball',
-	    'category' => 'Balls'
-	);
+        $data = array(
+            'name'     => 'Basketball',
+            'category' => 'Balls'
+        );
 	
-	$product = $this->eu->createEntity(new Entity\Product(), $data);
+        $product = $this->eu->createEntity(new Entity\Product(), $data);
     }
 
 }

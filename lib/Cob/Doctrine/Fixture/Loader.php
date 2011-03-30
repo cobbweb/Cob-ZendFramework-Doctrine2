@@ -22,31 +22,16 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-require 'bootstrap.php';
+namespace Cob\Doctrine\Fixture;
 
-$bootstrap->bootstrap('doctrine');
+/**
+ * Loader
+ *
+ * @author Andrew Cobby <cobby@cobbweb.me>
+ */
+interface Loader
+{
 
-$em = $application->getBootstrap()->getResource('doctrine');
-$writer = new \Symfony\Component\Console\Output\ConsoleOutput();
+    public function getFixtures();
 
-$writer->writeln("Loading fixtures...");
-
-$it = new DirectoryIterator(APPLICATION_PATH . '/modules');
-
-while($it->valid()){
-    if($it->isDot() || !$it->isDir()){
-        $it->next();
-        continue;
-    }
-    
-    if(is_dir($it->getPathname() . '/src/Domain/Fixture')){
-        $namespace = "Application\\" . ucfirst($it->getFilename()) . "\Domain\Fixture";
-        $loaders[] = new \Cob\ORM\Fixture\ModuleFixtureLoader($namespace, $it->getPathname() . '/src/Domain/Fixture');
-    }
-    
-    $it->next();
 }
-
-$runner = new \Cob\ORM\Fixture\FixtureRunner($em, $writer);
-$runner->addLoaders($loaders);
-$runner->run();

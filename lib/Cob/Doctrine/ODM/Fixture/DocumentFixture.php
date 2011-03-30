@@ -22,31 +22,57 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-require 'bootstrap.php';
+namespace Cob\Doctrine\ODM\Fixture;
 
-$bootstrap->bootstrap('doctrine');
+use Doctrine\ODM\MongoDB\DocumentManager;
 
-$em = $application->getBootstrap()->getResource('doctrine');
-$writer = new \Symfony\Component\Console\Output\ConsoleOutput();
-
-$writer->writeln("Loading fixtures...");
-
-$it = new DirectoryIterator(APPLICATION_PATH . '/modules');
-
-while($it->valid()){
-    if($it->isDot() || !$it->isDir()){
-        $it->next();
-        continue;
+/**
+ * Base class for a standard fixture
+ *
+ * @author Andrew Cobby <cobby@cobbweb.me>
+ */
+abstract class DocumentFixture implements \Cob\Doctrine\Fixture\Fixture
+{
+    
+    /**
+     * @var Doctrine\ODM\Mongo\DocumentManager
+     */
+    protected $dm;
+    
+    /**
+     * Dependent fixtures, class name as strings
+     * @var array()
+     */
+    protected $_dependsOn = array();
+ 
+    public function setDocumentManager(DocumentManager $dm)
+    {
+        $this->dm = $dm;
     }
     
-    if(is_dir($it->getPathname() . '/src/Domain/Fixture')){
-        $namespace = "Application\\" . ucfirst($it->getFilename()) . "\Domain\Fixture";
-        $loaders[] = new \Cob\ORM\Fixture\ModuleFixtureLoader($namespace, $it->getPathname() . '/src/Domain/Fixture');
+    public function init(){}
+    
+	/**
+	 * Execute the fixture
+	 */
+    final public function run()
+    {
+        $this->dm->flush();
+        $this->init();
+        
+        foreach($this->getDocuments() as $document){
+            $this->dm->persist($document);
+        }
     }
     
-    $it->next();
+    public function getDependencies()
+    {
+        return $this->_dependsOn;
+    }
+    
+    /**
+     * Returns an array of entities to persist
+     */
+    abstract function getDocuments();
+    
 }
-
-$runner = new \Cob\ORM\Fixture\FixtureRunner($em, $writer);
-$runner->addLoaders($loaders);
-$runner->run();

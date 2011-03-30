@@ -85,7 +85,7 @@ class FormAbstract extends \Zend_Form
             $element->removeDecorator('Label');
             $element->removeDecorator('HtmlTag');
 
-            $element->addDecorator('SimpleCompositeElement');
+            $element->addDecorator('ListWrapper');
         }
     }
     

@@ -32,10 +32,9 @@ namespace Cob\DependencyInjection;
  * @author Andrew Cobby <cobby@cobbweb.me>
  * @author Fabien Potencier <fabien.potencier@symfony-project.org>
  */
-class Container
+class Container implements \ArrayAccess
 {
-
-    protected $values = array();
+    private $values = array();
 
     /**
      * Sets a parameter or an object.
@@ -43,7 +42,7 @@ class Container
      * @param string $id    The unique identifier for the parameter or object
      * @param mixed  $value The value of the parameter or a closure to defined an object
      */
-    function __set($id, $value)
+    public function offsetSet($id, $value)
     {
         $this->values[$id] = $value;
     }
@@ -52,14 +51,12 @@ class Container
      * Gets a parameter or an object.
      *
      * @param  string $id The unique identifier for the parameter or object
-     *
      * @return mixed  The value of the parameter or an object
-     *
      * @throws InvalidArgumentException if the identifier is not defined
      */
-    function __get($id)
+    public function offsetGet($id)
     {
-        if(!isset($this->values[$id])){
+        if (!isset($this->values[$id])) {
             throw new InvalidArgumentException(sprintf('Identifier "%s" is not defined.', $id));
         }
 
@@ -71,7 +68,7 @@ class Container
      *
      * @return Boolean
      */
-    function __isset($id)
+    public function offsetExists($id)
     {
         return isset($this->values[$id]);
     }
@@ -81,7 +78,7 @@ class Container
      *
      * @throws InvalidArgumentException if the identifier is not defined
      */
-    function __unset($id)
+    public function offsetUnset($id)
     {
         unset($this->values[$id]);
     }
@@ -91,15 +88,15 @@ class Container
      * uniqueness in the scope of this instance of Pimple.
      *
      * @param Closure $callable A closure to wrap for uniqueness
-     *
      * @return Closure The wrapped closure
      */
-    function asShared($callable)
+    public function share(\Closure $callable)
     {
-        return function ($c) use ($callable) {
+        return function ($c) use ($callable)
+        {
             static $object;
 
-            if(is_null($object)){
+            if (is_null($object)) {
                 $object = $callable($c);
             }
 
@@ -107,4 +104,19 @@ class Container
         };
     }
 
+    /**
+     * Protects a callable from being interpreted as a service.
+     *
+     * This is useful when you want to store a callable as a parameter.
+     *
+     * @param Closure $callable A closure to protect from being evaluated
+     * @return Closure The protected closure
+     */
+    public function protect(\Closure $callable)
+    {
+        return function ($c) use ($callable)
+        {
+            return $callable;
+        };
+    }
 }

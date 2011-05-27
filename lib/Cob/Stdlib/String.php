@@ -116,6 +116,7 @@ class String
     {
         $characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         $size = strlen($characters);
+		$rand = '';
 
         do {
             $rand .= $characters[rand(0, $size - 1)];

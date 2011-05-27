@@ -88,6 +88,13 @@ class Dispatcher extends \Zend_Controller_Dispatcher_Standard
         return $className;
     }
 
+    public function classToFilename($class) {
+        $class = parent::classToFilename($class);
+        $class = str_replace('\\', '/', $class);
+        return $class;
+    }
+
+
     /**
      * Formats a string from a URI into a PHP-friendly name.
      *

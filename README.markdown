@@ -6,36 +6,36 @@ Mostly my own work with some inspiration from the [Epixa library](https://github
 ## Module structure
 Here is what an example module might look like:
 
-    /application
-        /modules
-            /blog
-                /configs
-                    navigation.xml
-                    routes.yml
-                /src (Namespace is Application\Blog)
-                    /Bootstrap.php
-                    /Controller
-                        IndexController.php
-                        PostController.php
-                    /Domain
-                        /Entity
-                            Post.php
-                            PostVersion.php
-                            PostSlug.php
-                        /Fixture
-                            PostFixture.php
-                        /Repository
-                            PostRepository.php
-                        /Service
-                            PostServiceInterface.php
-                            PostService.php
-                    /View
-                        /Helper
-                /views
-                    /index
-                        index.phtml
-                        post.phtml
-                        category.phtml
+  /application
+    /modules
+      /blog
+        /configs
+          navigation.xml
+          routes.yml
+        /src (Namespace is Application\Blog)
+          /Bootstrap.php
+          /Controller
+            IndexController.php
+              PostController.php
+          /Domain
+            /Entity
+              Post.php
+              PostVersion.php
+              PostSlug.php
+            /Fixture
+              PostFixture.php
+            /Repository
+              PostRepository.php
+            /Service
+              PostServiceInterface.php
+              PostService.php
+          /View
+            /Helper
+        /views
+          /index
+            index.phtml
+            post.phtml
+            category.phtml
                 
     
 

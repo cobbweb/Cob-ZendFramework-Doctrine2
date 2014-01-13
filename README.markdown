@@ -6,6 +6,7 @@ Mostly my own work with some inspiration from the [Epixa library](https://github
 ## Module structure
 Here is what an example module might look like:
 
+```
   /application
     /modules
       /blog
@@ -36,7 +37,7 @@ Here is what an example module might look like:
             index.phtml
             post.phtml
             category.phtml
-                
+```                
     
 
 
